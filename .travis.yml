@@ -9,12 +9,12 @@ script:
   - docker run ppanan/client-test npm test -- --coverage
 
 after_success:
-  - docker build -t ppanan/fib-client ./client
-  - docker build -t ppanan/fib-nginx ./nginx
-  - docker build -t ppanan/fib-server ./server
-  - docker build -t ppanan/fib-worker ./worker
+  - docker build -t ppanan/multi-client ./client
+  - docker build -t ppanan/multi-nginx ./nginx
+  - docker build -t ppanan/multi-server ./server
+  - docker build -t ppanan/multi-worker ./worker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push ppanan/fib-client
-  - docker push ppanan/fib-nginx
-  - docker push ppanan/fib-server
-  - docker push ppanan/fib-worker
+  - docker push ppanan/multi-client
+  - docker push ppanan/multi-nginx
+  - docker push ppanan/multi-server
+  - docker push ppanan/multi-worker
