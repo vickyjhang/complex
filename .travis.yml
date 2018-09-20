@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t ppanan/client-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run ppanan/client-test npm test -- --coverage
+
+after_success:
+  - docker build -t ppanan/fib-client ./client
+  - docker build -t ppanan/fib-nginx ./nginx
+  - docker build -t ppanan/fib-server ./server
+  - docker build -t ppanan/fib-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push ppanan/fib-client
+  - docker push ppanan/fib-nginx
+  - docker push ppanan/fib-server
+  - docker push ppanan/fib-worker
